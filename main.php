@@ -1,4 +1,4 @@
-?php
+<?php
  set_time_limit(0);
 login("Username","Password");
 $b = "http://example.com/";
