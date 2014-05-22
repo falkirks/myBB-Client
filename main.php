@@ -53,7 +53,7 @@ class mybbBot {
   }
   public function post($url, $msg) { //Post a new reply to a thread
     $html = new DOMDocument();
-    if(strpos($url, $this->b)) $data = connect($url, null);
+    if(strpos($url, $this->b) !== false) $data = connect($url, null);
     else $data = connect($b . $url, null);
     $data = substr($data, strpos($data, '<form method="post" action="newreply.php'));
     $data = substr($data, 0, strpos($data, '</form>')+7);
@@ -68,7 +68,7 @@ class mybbBot {
     }
     $list["message"] = $msg;
     unset($list["previewpost"]);
-    $this->connect($url, $list);
+    return $this->connect($url, $list);
   }
 }
 
