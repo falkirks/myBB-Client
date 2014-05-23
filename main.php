@@ -1,12 +1,14 @@
 <?php
+define("FORUM_NOT_FOUND", 0);
+define("AUTH_ERROR", 1);
 class mybbBot {
   private $lastlist, $lastactive, $token, $sid, $b, $u, $p, $h;
   function __construct($url, $user, $pass) {
     $this->b = $url;
     $this->p = $pass;
     $this->u = $user;
-    if (!file_get_contents($this->b)) throw new myBBException();
-    if (!$this->login($this->u, $this->p)) throw new myBBException();
+    if (!file_get_contents($this->b)) throw new myBBException(FORUM_NOT_FOUND);
+    if (!$this->login($this->u, $this->p)) throw new myBBException(AUTH_ERROR);
   }
   private function login($user, $password) {
     global $http_response_header;
@@ -51,7 +53,6 @@ class mybbBot {
         )
         );
     }
-    $this->h = $http_response_header;
     return file_get_contents($url, false, stream_context_create($opts));
   }
   public function quickReply($url, $msg) { //Post a new reply to a thread at $url
@@ -80,4 +81,12 @@ class mybbBot {
 
   }
 }
-class myBBException extends Exception {}
+class myBBException extends Exception {
+  private $c;
+    function __construct($cause) {
+      $this->c = $cause;
+    }
+    public function getCause(){
+      return $this->c;
+    }
+}
