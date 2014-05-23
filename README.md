@@ -7,6 +7,7 @@ Little Class for writing bots for myBB in PHP. Currently is really badly put tog
 try{
   $b = new mybbBot("http://example.com/","Username","pass");
   $b->quickReply("showthread.php?tid=1","Post content!");
+  $b->rateThread(1,5); //Rate thread ID 1 with 5
 }
 catch(myBBException $e){
   switch ($e->getCause()) {
