@@ -77,11 +77,16 @@ class mybbBot {
     if(strpos($url, $this->b) === false) $id = $this->b . $id;
     $data = $this->connect($id, null);
   }
-  public function rateThread($url){ //Rates thread at $url
+  public function rateThread($id){ //Rates thread at $url
 
   }
   public function urlToID($url){ //For forums with URL rewrites
 
+  }
+  public function getPostKey(){
+    $data = $this->connect($this->b, null);
+    $data = substr($data,strpos($data,'var my_post_key = ""')+19);
+    return substr($data,strpos($data,'"'));
   }
 }
 class myBBException extends Exception {
