@@ -9,6 +9,7 @@ class mybbBot {
     if (!$this->login($this->u, $this->p)) throw new myBBException();
   }
   private function login($user, $password) {
+    global $http_response_header;
     $result = $this->connect($this->b . 'member.php', array(
     'username' => $user, 
     'password' => $password, 
@@ -31,6 +32,7 @@ class mybbBot {
     return true;
   }
   private function connect($url, $post) { //Connector function
+    global $http_response_header;
     if ($post != null) {
       $opts = array('http' =>
         array(
@@ -49,18 +51,18 @@ class mybbBot {
         )
         );
     }
+    $this->h = $http_response_header;
     return file_get_contents($url, false, stream_context_create($opts));
   }
   public function post($url, $msg) { //Post a new reply to a thread
     $html = new DOMDocument();
-    if(strpos($url, $this->b) !== false) $data = connect($url, null);
-    else $data = connect($b . $url, null);
+    if(strpos($url, $this->b) === false) $url = $this->b . $url;
+    $data = $this->connect($url, null);
     $data = substr($data, strpos($data, '<form method="post" action="newreply.php'));
     $data = substr($data, 0, strpos($data, '</form>')+7);
-    print($data);
     $html->loadHTML($data);
     $els = $html->getelementsbytagname('input');
-    $url = $b . $html->getElementById('quick_reply_form')->getAttribute('action');
+    $url = $this->b . $html->getElementById('quick_reply_form')->getAttribute('action');
     $list = array();
     foreach($els as $inp) {
       $name = $inp->getAttribute('name');
@@ -68,8 +70,7 @@ class mybbBot {
     }
     $list["message"] = $msg;
     unset($list["previewpost"]);
-    return $this->connect($url, $list);
+    $this->connect($url, $list);
   }
 }
-
 class myBBException extends Exception {}
