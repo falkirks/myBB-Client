@@ -27,11 +27,7 @@ catch(myBBException $e){
 ```
 
 ##Features
-- [x] Create new quick replies
-- [x] Create new threads (no settings)
-- [x] Rate Threads
-- [ ] Delete posts/threads
-- [ ] Edit posts/thread
-- [ ] Edit signature and profile
-
+- Create new quick replies
+- Create new threads (no settings)
+- Rate Threads
 
