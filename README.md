@@ -3,6 +3,8 @@ myBB Bot Class
 
 Little Class for writing bots for myBB in PHP. Currently is really badly put together and doesn't do much :)
 
+##Example
+
 ```php
 try{
   $b = new mybbBot("http://example.com/","Username","pass");
@@ -23,3 +25,13 @@ catch(myBBException $e){
   }
 }
 ```
+
+##Features
+- [x] Create new quick replies
+- [x] Create new threads (no settings)
+- [x] Rate Threads
+- [ ] Delete posts/threads
+- [ ] Edit posts/thread
+- [ ] Edit signature and profile
+
+
