@@ -2,7 +2,7 @@
 define("FORUM_NOT_FOUND", 0);
 define("AUTH_ERROR", 1);
 class mybbBot {
-  private $lastlist, $lastactive, $token, $sid, $b, $u, $p, $h;
+  private $lastvisit, $lastactive, $token, $sid, $b, $u, $p, $h;
   function __construct($url, $user, $pass) {
     $this->b = $url;
     $this->p = $pass;
