@@ -72,7 +72,10 @@ class mybbBot {
     return $this->connect($url, $list);
   }
   public function newThread($id,$t,$c){ //Post a new thread in $id section
-
+    $html = new DOMDocument();
+    if(is_numeric($url)) $id = "newthread.php?tid=" . $id;
+    if(strpos($url, $this->b) === false) $id = $this->b . $id;
+    $data = $this->connect($id, null);
   }
   public function rateThread($url){ //Rates thread at $url
 
