@@ -87,8 +87,8 @@ class mybbBot {
   }
   public function getPostKey(){
     $data = $this->connect($this->b, null);
-    $data = substr($data,strpos($data,'var my_post_key = ""')+19);
-    return substr($data,strpos($data,'"'));
+    $data = substr($data,strpos($data,'var my_post_key = "')+19);
+    return substr($data,0,strpos($data,'"'));
   }
 }
 class myBBException extends Exception {
