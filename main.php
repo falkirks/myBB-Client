@@ -73,9 +73,24 @@ class mybbBot {
   }
   public function newThread($id,$t,$c){ //Post a new thread in $id section
     $html = new DOMDocument();
-    if(is_numeric($url)) $id = "newthread.php?tid=" . $id;
-    if(strpos($url, $this->b) === false) $id = $this->b . $id;
+    if(is_numeric($id)) $id = "newthread.php?fid=" . $id;
+    if(strpos($id, $this->b) === false) $id = $this->b . $id;
     $data = $this->connect($id, null);
+    if(stripos($data, "Invalid forum") !== false) return false;
+    $data = substr($data, strpos($data, '<form action="newthread.php?'));
+    $data = substr($data, 0, strpos($data, '</form>')+7);
+    $html->loadHTML($data);
+    $els = $html->getelementsbytagname('input');
+    $id .= "&processed=1";
+    $list = array();
+    foreach($els as $inp) $list[$inp->getAttribute('name')] = $inp->getAttribute('value');
+    $list["message"] = $c;
+    $list["subject"] = $t;
+    unset($list["previewpost"]);
+    unset($list["savedraft"]);
+    unset($list["modoptions[stickthread]"]);
+    unset($list["modoptions[closethread]"]);
+    return $this->connect($id, $list);
   }
   public function rateThread($id,$rating){ //Rates the thread with $id
     if($rating > 5 || $rating < 1) return false;
