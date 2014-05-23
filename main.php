@@ -77,8 +77,10 @@ class mybbBot {
     if(strpos($url, $this->b) === false) $id = $this->b . $id;
     $data = $this->connect($id, null);
   }
-  public function rateThread($id){ //Rates thread at $url
-
+  public function rateThread($id,$rating){ //Rates the thread with $id
+    if($rating > 5 || $rating < 1) return false;
+    if($this->connect($this->b . "ratethread.php?tid=" . $id . "&rating=" . $rating . "&my_post_key=" . $this->getPostKey()) !== false) return true;
+    return false;
   }
   public function urlToID($url){ //For forums with URL rewrites
 
