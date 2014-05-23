@@ -9,7 +9,7 @@ try{
   $b->quickReply("showthread.php?tid=1","Post content!");
 }
 catch(myBBException $e){
-  switch (variable) {
+  switch ($e->getCause()) {
     case FORUM_NOT_FOUND:
       die("Forum could not be reached");
       break;
