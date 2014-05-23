@@ -5,8 +5,8 @@ Little myBB bot written in PHP. Currently is really badly put together and doesn
 
 ```php
 try{
-$b = new mybbBot("http://example.com","Username","pass");
-$b->quickReply("showthread.php?tid=1","Post content.");
+  $b = new mybbBot("http://example.com/","Username","pass");
+  $b->quickReply("showthread.php?tid=1","Post content!");
 }
 catch(myBBException $e){
   switch (variable) {
