@@ -1,6 +1,6 @@
 <?php
 class mybbBot {
-  private $lastlist, $lastactive, $token, $sid, $b, $u, $p;
+  private $lastlist, $lastactive, $token, $sid, $b, $u, $p, $h;
   function __construct($url, $user, $pass) {
     $this->b = $url;
     $this->p = $pass;
@@ -54,7 +54,7 @@ class mybbBot {
     $this->h = $http_response_header;
     return file_get_contents($url, false, stream_context_create($opts));
   }
-  public function post($url, $msg) { //Post a new reply to a thread
+  public function quickReply($url, $msg) { //Post a new reply to a thread at $url
     $html = new DOMDocument();
     if(strpos($url, $this->b) === false) $url = $this->b . $url;
     $data = $this->connect($url, null);
@@ -64,13 +64,20 @@ class mybbBot {
     $els = $html->getelementsbytagname('input');
     $url = $this->b . $html->getElementById('quick_reply_form')->getAttribute('action');
     $list = array();
-    foreach($els as $inp) {
-      $name = $inp->getAttribute('name');
-      $list[$inp->getAttribute('name')] = $inp->getAttribute('value');
-    }
+    foreach($els as $inp) $list[$inp->getAttribute('name')] = $inp->getAttribute('value');
     $list["message"] = $msg;
     unset($list["previewpost"]);
+    var_dump($list);
     $this->connect($url, $list);
+  }
+  public function newThread($id,$t,$c){ //Post a new thread in $id section
+
+  }
+  public function rateThread($url){ //Rates thread at $url
+
+  }
+  public function urlToID($url){ //For forums with URL rewrites
+
   }
 }
 class myBBException extends Exception {}
