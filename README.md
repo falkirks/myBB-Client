@@ -1,7 +1,7 @@
-myBB bot
+myBB Bot Class
 ================
 
-Little myBB bot written in PHP. Currently is really badly put together and doesn't do much :)
+Little Class for writing bots for myBB in PHP. Currently is really badly put together and doesn't do much :)
 
 ```php
 try{
