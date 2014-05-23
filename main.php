@@ -69,7 +69,6 @@ class mybbBot {
     foreach($els as $inp) $list[$inp->getAttribute('name')] = $inp->getAttribute('value');
     $list["message"] = $msg;
     unset($list["previewpost"]);
-    var_dump($list);
     return $this->connect($url, $list);
   }
   public function newThread($id,$t,$c){ //Post a new thread in $id section
