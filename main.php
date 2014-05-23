@@ -57,6 +57,7 @@ class mybbBot {
   }
   public function quickReply($url, $msg) { //Post a new reply to a thread at $url
     $html = new DOMDocument();
+    if(is_numeric($url)) $url = "showthread.php?tid=" . $url;
     if(strpos($url, $this->b) === false) $url = $this->b . $url;
     $data = $this->connect($url, null);
     $data = substr($data, strpos($data, '<form method="post" action="newreply.php'));
@@ -69,7 +70,7 @@ class mybbBot {
     $list["message"] = $msg;
     unset($list["previewpost"]);
     var_dump($list);
-    $this->connect($url, $list);
+    return $this->connect($url, $list);
   }
   public function newThread($id,$t,$c){ //Post a new thread in $id section
 
