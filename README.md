@@ -33,3 +33,4 @@ catch(myBBException $e){
 - Rate Threads
 - Edit Posts
 - Delete Posts
+- Send Private Messages
