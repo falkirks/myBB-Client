@@ -57,8 +57,7 @@ class mybbBot {
   }
   public function quickReply($url, $msg) { //Post a new reply to a thread at $url
     $html = new DOMDocument();
-    if(is_numeric($url)) $url = "showthread.php?tid=" . $url;
-    if(strpos($url, $this->b) === false) $url = $this->b . $url;
+    $url = $this->switchIDToURL($url,"showthread.php?tid=");
     $data = $this->connect($url, null);
     $data = substr($data, strpos($data, '<form method="post" action="newreply.php'));
     $data = substr($data, 0, strpos($data, '</form>')+7);
@@ -73,17 +72,16 @@ class mybbBot {
     $data = substr($data, strpos($data,"pid=")+4);
     return substr($data, 0, strpos($data, '#'));
   }
-  public function newThread($id,$t,$c){ //Post a new thread in $id section
+  public function newThread($fid,$t,$c){ //Post a new thread in $id section
     $html = new DOMDocument();
-    if(is_numeric($id)) $id = "newthread.php?fid=" . $id;
-    if(strpos($id, $this->b) === false) $id = $this->b . $id;
-    $data = $this->connect($id, null);
+    $fid = $this->switchIDToURL($fid,"newthread.php?fid=");
+    $data = $this->connect($fid, null);
     if(stripos($data, "Invalid forum") !== false) return false;
     $data = substr($data, strpos($data, '<form action="newthread.php?'));
     $data = substr($data, 0, strpos($data, '</form>')+7);
     $html->loadHTML($data);
     $els = $html->getelementsbytagname('input');
-    $id .= "&processed=1";
+    $fid .= "&processed=1";
     $list = array();
     foreach($els as $inp) $list[$inp->getAttribute('name')] = $inp->getAttribute('value');
     $list["message"] = $c;
@@ -93,22 +91,39 @@ class mybbBot {
     unset($list["modoptions[stickthread]"]);
     unset($list["modoptions[closethread]"]);
     unset($list["postpoll"]);
-    $data = $this->connect($id, $list);
+    $data = $this->connect($fid, $list);
     $data = substr($data, strpos($data,"?tid=")+5);
     return substr($data, 0, strpos($data, '"'));
+  }
+  public function editPost($pid,$t,$c){ //Edits post with $pid
+    $html = new DOMDocument();
+    $pid = $this->switchIDToURL($pid,"editpost.php?pid=");
+    $data = $this->connect($pid, null);
+    $data = substr($data, strpos($data, '<form action="editpost.php?'));
+    $data = substr($data, 0, strpos($data, '</form>')+7);
+    $html->loadHTML($data);
+    $els = $html->getelementsbytagname('input');
+    $pid .= "&processed=1";
+    foreach($els as $inp) $list[$inp->getAttribute('name')] = $inp->getAttribute('value');
+    if($c != null) $list["message"] = $c;
+    if($t != null) $list["subject"] = $t;
+    unset($list["previewpost"]);
+    $data = $this->connect($pid, $list);
   }
   public function rateThread($id,$rating){ //Rates the thread with $id
     if($rating > 5 || $rating < 1) return false;
     if($this->connect($this->b . "ratethread.php?tid=" . $id . "&rating=" . $rating . "&my_post_key=" . $this->getPostKey(),null) !== false) return true;
     return false;
   }
-  public function urlToID($url){ //For forums with URL rewrites
-
-  }
-  public function getPostKey(){
+  public function getPostKey(){ //Get post key of logged in user
     $data = $this->connect($this->b, null);
     $data = substr($data,strpos($data,'var my_post_key = "')+19);
     return substr($data,0,strpos($data,'"'));
+  }
+  private function switchIDToURL($id,$url){
+    if(is_numeric($id)) $id = $url . $id;
+    if(strpos($id, $this->b) === false) $id = $this->b . $id;
+    return $id;
   }
 }
 class myBBException extends Exception {
