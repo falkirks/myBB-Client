@@ -4,12 +4,13 @@ myBB Bot Class
 Little Class for writing bots for myBB in PHP. Currently is really badly put together and doesn't do much :)
 
 ##Example
-
+The below example will login, create a thread (in forum 2), reply to it and then rate it with five stars.
 ```php
 try{
   $b = new mybbBot("http://example.com/","Username","pass");
-  $b->quickReply("showthread.php?tid=1","Post content!");
-  $b->rateThread(1,5); //Rate thread ID 1 with 5
+  $id = $b->newThread(2,"Thread title","Contents...");
+  $b->quickReply($id,"Wow. Such a great post!");
+  $b->rateThread($id,5);
 }
 catch(myBBException $e){
   switch ($e->getCause()) {
