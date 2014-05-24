@@ -1,7 +1,7 @@
 myBB Bot Class
 ================
 
-Little Class for writing bots for myBB in PHP. Currently is really badly put together and doesn't do much :)
+Little Class for writing bots for myBB in PHP. Won't work properly on forums with non-standard URL format.
 
 ##Example
 The below example will login, create a thread (in forum 2), reply to it and then rate it with five stars.
