@@ -134,6 +134,18 @@ class mybbBot {
         "action" => "deletepost",
         "pid" => $pid));
   }
+  public function sendMessage(Array $to, $t, $c){
+    $this->connect($this->b . "private.php?action=send", 
+      array(
+        "my_post_key" => $this->getPostKey(), 
+        "to" => implode(",", $to),
+        "submit" => "1",
+        "action" => "do_send",
+        "subject" => $t,
+        "message" => $c,
+        "pmid" => "1",
+        "do" => "1"));
+  }
 }
 class myBBException extends Exception {
   private $c;
