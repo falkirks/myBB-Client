@@ -69,7 +69,9 @@ class mybbBot {
     foreach($els as $inp) $list[$inp->getAttribute('name')] = $inp->getAttribute('value');
     $list["message"] = $msg;
     unset($list["previewpost"]);
-    return $this->connect($url, $list);
+    $data = $this->connect($url, $list);
+    $data = substr($data, strpos($data,"pid=")+4);
+    return substr($data, 0, strpos($data, '#'));
   }
   public function newThread($id,$t,$c){ //Post a new thread in $id section
     $html = new DOMDocument();
@@ -90,7 +92,10 @@ class mybbBot {
     unset($list["savedraft"]);
     unset($list["modoptions[stickthread]"]);
     unset($list["modoptions[closethread]"]);
-    return $this->connect($id, $list);
+    unset($list["postpoll"]);
+    $data = $this->connect($id, $list);
+    $data = substr($data, strpos($data,"?tid=")+5);
+    return substr($data, 0, strpos($data, '"'));
   }
   public function rateThread($id,$rating){ //Rates the thread with $id
     if($rating > 5 || $rating < 1) return false;
