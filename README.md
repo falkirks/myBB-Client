@@ -31,4 +31,4 @@ catch(myBBException $e){
 - Create new quick replies
 - Create new threads (no settings)
 - Rate Threads
-
+- Edi Posts
