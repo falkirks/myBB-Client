@@ -125,6 +125,15 @@ class mybbBot {
     if(strpos($id, $this->b) === false) $id = $this->b . $id;
     return $id;
   }
+  public function deletePost($pid){
+    $this->connect($this->b . "editpost.php", 
+      array(
+        "my_post_key" => $this->getPostKey(), 
+        "delete" => "1", 
+        "submit" => "1",
+        "action" => "deletepost",
+        "pid" => $pid));
+  }
 }
 class myBBException extends Exception {
   private $c;
