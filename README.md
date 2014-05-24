@@ -32,3 +32,4 @@ catch(myBBException $e){
 - Create new threads (no settings)
 - Rate Threads
 - Edit Posts
+- Delete Posts
