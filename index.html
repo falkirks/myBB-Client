@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Mybb-bot-class by Falkirks</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Mybb-bot-class</h1>
+        <p>Class for writing myBB bots in PHP</p>
+
+        <p class="view"><a href="https://github.com/Falkirks/myBB-Bot-Class">View the Project on GitHub <small>Falkirks/myBB-Bot-Class</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/Falkirks/myBB-Bot-Class/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/Falkirks/myBB-Bot-Class/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/Falkirks/myBB-Bot-Class">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="mybb-bot-class" class="anchor" href="#mybb-bot-class"><span class="octicon octicon-link"></span></a>myBB Bot Class</h1>
+
+<p>Little Class for writing bots for myBB in PHP. Won't work properly on forums with non-standard URL format. All features are tested on a fresh installation of myBB 1.6.13.</p>
+
+<h2>
+<a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h2>
+
+<p>The below example will login, create a thread (in forum 2), reply to it and then rate it with five stars.</p>
+
+<div class="highlight highlight-php"><pre><span class="k">try</span><span class="p">{</span>
+  <span class="nv">$b</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mybbBot</span><span class="p">(</span><span class="s2">"http://example.com/"</span><span class="p">,</span><span class="s2">"Username"</span><span class="p">,</span><span class="s2">"pass"</span><span class="p">);</span>
+  <span class="nv">$id</span> <span class="o">=</span> <span class="nv">$b</span><span class="o">-&gt;</span><span class="na">newThread</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="s2">"Thread title"</span><span class="p">,</span><span class="s2">"Contents..."</span><span class="p">);</span>
+  <span class="nv">$b</span><span class="o">-&gt;</span><span class="na">quickReply</span><span class="p">(</span><span class="nv">$id</span><span class="p">,</span><span class="s2">"Wow. Such a great post!"</span><span class="p">);</span>
+  <span class="nv">$b</span><span class="o">-&gt;</span><span class="na">rateThread</span><span class="p">(</span><span class="nv">$id</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">catch</span><span class="p">(</span><span class="nx">myBBException</span> <span class="nv">$e</span><span class="p">){</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getCause</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nx">FORUM_NOT_FOUND</span><span class="o">:</span>
+      <span class="k">die</span><span class="p">(</span><span class="s2">"Forum could not be reached"</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nx">AUTH_ERROR</span><span class="o">:</span>
+      <span class="k">die</span><span class="p">(</span><span class="s2">"Bad login"</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">default</span><span class="o">:</span>
+      <span class="k">die</span><span class="p">(</span><span class="s2">"Unknown error."</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<ul>
+<li>Create new quick replies</li>
+<li>Create new threads (no settings)</li>
+<li>Rate Threads</li>
+<li>Edit Posts</li>
+<li>Delete Posts</li>
+<li>Send Private Messages</li>
+</ul>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/Falkirks">Falkirks</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
