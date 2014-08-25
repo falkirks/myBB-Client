@@ -1,4 +1,4 @@
-myBB Bot Class
+myBB-Client Class
 ================
 
 Little Class for writing bots for myBB in PHP. Won't work properly on forums with non-standard URL format. All features are tested on a fresh installation of myBB 1.6.13.
